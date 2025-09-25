@@ -14,19 +14,27 @@ export function useArray(initialArray){
         setArray(origArray => {
             return [...origArray.slice(0, index), newValue, ...origArray.slice(index + 1)]
         })
-    })
+    }, [])
 
     const filter = useCallback(callback => {
         setArray(origArray => {
             return origArray.filter(callback)
         })
-    })
+    }, [])
 
     const remove = useCallback(index => {
         setArray(origArray => {
             return [...origArray.slice(0, index), ...origArray.slice(index + 1)]
         })
-    })
+    }, [])
 
-    return {array, set: setArray, push, replace, filter, remove}
+    const clear = useCallback(() => {
+        setArray([])
+    }, [])
+
+    const reset = useCallback(() => {
+        setArray(initialArray)
+    }, [initialArray])
+
+    return {array, set: setArray, push, replace, filter, remove, clear, reset}
 }
